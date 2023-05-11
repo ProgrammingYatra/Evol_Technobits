@@ -6,6 +6,7 @@ const uploadSchema = new mongoose.Schema({
   },
   likes: {
     type: Number,
+    default:100
   },
   uploadedAt: {
     type: Date,
