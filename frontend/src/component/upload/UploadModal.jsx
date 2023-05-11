@@ -1,14 +1,32 @@
 import { useState } from 'react';
 import { Modal, Button, Form } from 'react-bootstrap';
+import axios from 'axios'
 
 function UploadModal() {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+    const [message, setMessage] = useState('');
 
-  const handleFileUpload = (event) => {
-    // const file = event.target.files[0];
+  const handleFileUpload =async (e) => {
+    const file = e.target.files[0];
+    console.log(file)
     // Handle file upload logic here
+    e.preventDefault();
+    const formData = new FormData();
+    formData.append('image', file);
+
+    try {
+      const res = await axios.post('/upload', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      });
+      setMessage(`Image uploaded: ${res.data.originalName}`);
+    } catch (err) {
+      console.error(err);
+      setMessage('Upload failed');
+    }
   }
 
   return (
@@ -35,6 +53,7 @@ function UploadModal() {
             Upload
           </Button>
         </Modal.Footer>
+        {message && <p>{message}</p>}
       </Modal>
     </>
   );
