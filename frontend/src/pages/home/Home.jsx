@@ -1,22 +1,39 @@
-import React from 'react'
-import Data from '../../data/Data'
-
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import { Container, Row, Col, Card } from "react-bootstrap";
 
 const Home = () => {
-  return (
-    <div>
-      {Data.map((image) => (
-        <div key={image.id} className="card col-3">
-          <img src={image.url} alt={image.title} style={{ width: '18rem'}}/>
-          <div className="card-body">
-            <h5 className="card-title">{image.title}</h5>
-            <p className="card-text">{image.likes}</p>
-            <p className="card-text">{image.uploadedTime}</p>
-          </div>
-        </div>
-      ))}
-    </div>
-  )
-}
+  const [images, setImages] = useState([]);
 
-export default Home
+  useEffect(() => {
+    axios
+      .get("/images")
+      .then((response) => {
+        setImages(response.data.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
+
+  return (
+    <Container>
+      <Row xs={1} md={2} lg={3} className="g-4">
+        {images.map((image) => (
+          <Col key={image._id}>
+            <Card>
+              <Card.Img variant="top" src={image.img} />
+              <Card.Body>
+                <Card.Title>{image.title}</Card.Title>
+                <Card.Text>Likes: {image.likes}</Card.Text>
+                <Card.Text>Uploaded: {image.uploadedAt}</Card.Text>
+              </Card.Body>
+            </Card>
+          </Col>
+        ))}
+      </Row>
+    </Container>
+  );
+};
+
+export default Home;

@@ -1,18 +1,37 @@
 import React, { useState } from "react";
 import { Modal, Button, Form } from "react-bootstrap";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import {  toast } from 'react-toastify';
 
-const LoginModal = ({ show, handleClose }) => {
+const LoginModal = ({ show, handleClose, set }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     // handle login logic here
-    console.log(`Email: ${email}, Password: ${password}`);
-    handleClose()
+    try {
+      const response = await axios.post("/login", { email, password });
+      localStorage.setItem("token", response.data.token);
+      console.log(`Email: ${email}, Password: ${password}`);
+      // redirect to home page or dashboard
+      navigate("/");
+      toast.success("Success Notification !", {
+        position: toast.POSITION.TOP_CENTER
+      });
+    } catch (error) {
+      console.error(error);
+      // display error message to user
+    }
+
+    handleClose();
+    set(true);
   };
 
   return (
+    <>
     <Modal show={show} onHide={handleClose}>
       <Modal.Header closeButton>
         <Modal.Title>Login</Modal.Title>
@@ -44,6 +63,8 @@ const LoginModal = ({ show, handleClose }) => {
         </Form>
       </Modal.Body>
     </Modal>
+    
+    </>
   );
 };
 

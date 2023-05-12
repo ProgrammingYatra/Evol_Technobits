@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { Container, Row, Col, Card } from "react-bootstrap";
 
-function TopRated() {
+function RecentlyUploaded() {
   const [images, setImages] = useState([]);
 
   useEffect(() => {
@@ -10,9 +10,8 @@ function TopRated() {
       try {
         const response = await axios.get('/images');
         const {data} = response.data;
-        console.log(data)
         // Sort the images in descending order of the upload time
-        data.sort((a, b) => b.likes - a.likes);
+        data.sort((a, b) => new Date(b.uploadedAt) - new Date(a.uploadedAt));
         setImages(data);
       } catch (error) {
         console.error(error);
@@ -32,7 +31,6 @@ function TopRated() {
                 <Card.Title>{image.title}</Card.Title>
                 <Card.Text>Likes: {image.likes}</Card.Text>
                 <Card.Text>Uploaded: {image.uploadedAt}</Card.Text>
-                {/* <Button variant="primary">Likes</Button> */}
               </Card.Body>
             </Card>
           </Col>
@@ -42,4 +40,4 @@ function TopRated() {
   );
 }
 
-export default TopRated;
+export default RecentlyUploaded;

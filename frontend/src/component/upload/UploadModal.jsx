@@ -6,7 +6,6 @@ function UploadModal() {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-    const [message, setMessage] = useState('');
 
   const handleFileUpload =async (e) => {
     const file = e.target.files[0];
@@ -22,10 +21,9 @@ function UploadModal() {
           'Content-Type': 'multipart/form-data'
         }
       });
-      setMessage(`Image uploaded: ${res.data.originalName}`);
+      console.log("File Uploaded Successfully",res)
     } catch (err) {
       console.error(err);
-      setMessage('Upload failed');
     }
   }
 
@@ -53,7 +51,6 @@ function UploadModal() {
             Upload
           </Button>
         </Modal.Footer>
-        {message && <p>{message}</p>}
       </Modal>
     </>
   );

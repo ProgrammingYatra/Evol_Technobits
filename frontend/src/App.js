@@ -1,27 +1,49 @@
-import React, { useState } from "react";
+import React from "react";
+import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
+import Home from "./pages/home/Home";
+import RecentlyUploaded from "./pages/RecentlyUploaded/RecentlyAdded";
+import NavBar from "./component/navbar/NavBar";
+import TopRated from "./pages/topRated/TopRated";
 
-import { Button } from "react-bootstrap";
-import LoginModal from "./component/login/LoginModal";
-import UploadModal from "./component/upload/UploadModal";
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const App = () => {
-  const [showLoginModal, setShowLoginModal] = useState(false);
-
-  const handleCloseLoginModal = () => setShowLoginModal(false);
-  const handleShowLoginModal = () => setShowLoginModal(true);
-
-  const handleLogout = () => {
-    // handle logout logic here
-    console.log("Logged out");
-    handleCloseLoginModal();
+  <ToastContainer/>
+  const Layout = () => {
+    return (
+      <div className="app">
+        <NavBar />
+        <Outlet />
+      </div>
+    );
   };
+  
+  const router = createBrowserRouter([
+    {
+      path: "/",
+      element: <Layout />,
+      children: [
+        {
+          path: "/",
+          element: <Home />,
+        },
+        {
+          path:"/recently-uploaded",
+          element: <RecentlyUploaded/>
+        },
+        {
+          path:"/top-rated",
+          element: <TopRated/>
+        },
+       
+      ],
+    },
+  ]);
 
   return (
-    <div className="">
-      <Button onClick={handleShowLoginModal}>Login</Button>
-      <Button onClick={handleLogout}>Logout</Button>
-      <LoginModal show={showLoginModal} handleClose={handleCloseLoginModal} />
-      <UploadModal />
+    <div className="App">
+      <RouterProvider router={router} />
     </div>
   );
 };
