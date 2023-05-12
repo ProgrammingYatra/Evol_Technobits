@@ -16,3 +16,8 @@ exports.uploadImg = catchAsyncError(async (req, res, next) => {
   });
   return res.status(201).json({ success: true, post: uploaded });
 });
+
+exports.getImage = catchAsyncError(async (req, res, next) => {
+  let allImg = await upload.find();
+  return res.status(201).json({ success: true, data: allImg });
+});
