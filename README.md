@@ -18,18 +18,25 @@ Evol Technobits Digital Pvt. Ltd.
 ## Backend 
 
 ### .env file
+
+#### MongoDB 
+
 MONGO_URI="---------------"
 
 PORT=4000
+
+#### jwt
 
 JWT_SECRET="programmingyatra"
 
 JWT_EXPIRE=5d
 
+#### cookie
+
 COOKIE_EXPIRE=5
 
 
-//AWS
+#### AWS
 
 KEY="---"
 
@@ -55,5 +62,5 @@ REGION="-----"
 
 
 ## Visit tech blogging page :- 
-##### [www.programmingyatra.in]
+### www.programmingyatra.in
 
