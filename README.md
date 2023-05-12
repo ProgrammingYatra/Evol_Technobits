@@ -19,16 +19,22 @@ Evol Technobits Digital Pvt. Ltd.
 
 ### .env file
 MONGO_URI="---------------"
+
 PORT=4000
+
 JWT_SECRET="programmingyatra"
+
 JWT_EXPIRE=5d
+
 COOKIE_EXPIRE=5
 
 
 //AWS
 
 KEY="---"
+
 AWS_SECRET_KEY="-----"
+
 REGION="-----"
 
 #### Run the Program
