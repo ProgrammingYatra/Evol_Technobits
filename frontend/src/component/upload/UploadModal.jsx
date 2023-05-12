@@ -21,7 +21,7 @@ function UploadModal() {
           'Content-Type': 'multipart/form-data'
         }
       });
-      console.log("File Uploaded Successfully",res)
+      console.log("File Uploaded Successfully",res.data.originalname)
     } catch (err) {
       console.error(err);
     }
